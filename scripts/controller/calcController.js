@@ -6,9 +6,11 @@ class CalcController {
         this._dateEl = document.querySelector('#data');
         this._timeEl = document.querySelector('#hora');
         this._locale = 'pt-br';
+        this.displayCalc = 0; //inicializa a calculadora com zero
         this._currentDate;
         this.initButtonsEvents();
         this.initialize();
+        this.vetor = [];
     }
 
     initialize() {
@@ -31,16 +33,50 @@ class CalcController {
     }
 
     execBtn(value){
+
+            
+        let teste = []; //vetor para armazenar os digitos
+       // console.log(teste);
+
         switch (value){
             case 'ac':
             console.log('botao AC fucnionando');
+            this.displayCalc = 0;
+            
 
             break;
 
             case '1':
             console.log("botao 1 funcionando");
             this.displayCalc = 1;
+               this.vetor.push('1');
+            console.log(this.vetor);
+            
             break;
+
+            
+            case '2':
+            console.log("botao 2 funcionando");
+            this.displayCalc = 2;
+            this.vetor.push('2');
+            console.log(this.vetor);
+            
+            break;
+
+            case '3':
+            console.log("botao 3 funcionando");
+            this.displayCalc = 3;
+            this.vetor.push('3');
+            console.log(this.vetor);
+            break;
+
+            case 'igual':
+            console.log("igual ok");
+            console.log(this.vetor);
+            this.displayCalc = this.vetor[0] + this.vetor[1] + this.vetor[2] + + this.vetor[3];
+            break;
+
+            
 
 
         }
