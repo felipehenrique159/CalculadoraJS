@@ -6,7 +6,7 @@ class CalcController { //cria a classe
         this._dateEl = document.querySelector('#data');
         this._timeEl = document.querySelector('#hora');
         this._locale = 'pt-br'; //ja inicia fuso horario em brasil
-        this.displayCalc = 0 ; //inicializa a calculadora com zero
+        this.displayCalc = 0; //inicializa a calculadora com zero
         this._currentDate;
         this.initButtonsEvents();
         this.initialize();
@@ -24,6 +24,7 @@ class CalcController { //cria a classe
 
         }, 1000); //atualiza a cada 1 segundo
 
+       //this.setLastNumberToDisplay();
 
     }
 
@@ -37,14 +38,16 @@ class CalcController { //cria a classe
         this.displayCalc = 'Error';
     }
 
-    clearAll() {
-        console.log('botao AC funcionando');
+    clearAll() { //limpa tudo
+       
         this._operation = [];
+        this.setLastNumberToDisplay();
     }
 
     clearEntry() {
-        console.log('botao ce funcionando');
+        
         this._operation.pop();
+        this.setLastNumberToDisplay();
     }
 
     isOperator(value) {
@@ -74,18 +77,39 @@ class CalcController { //cria a classe
 
     calc(){ //metodo para efetuar os calculos
 
-        let last = this._operation.pop();
+        let last = '';
 
+        if(this._operation.length > 3){
+            last = this._operation.pop();
+        }
+
+
+       
         let result = eval(this._operation.join(''));
+        
+        if(last == '%'){
+          
+            result /= 100;
 
-        this._operation = [result , last];
+            this._operation = [result];
+
+        }
+
+        else{
+            this._operation = [result];
+            if(last) this._operation.push(last);
+        }
+
+        
+
+        
 
         this.setLastNumberToDisplay();
 
     }
 
     setLastNumberToDisplay(){
-        
+    
        let lastNumber;
 
         for(let i = this._operation.length - 1 ; i>=0 ; i-- ){
@@ -96,6 +120,8 @@ class CalcController { //cria a classe
          
             }
         }
+
+        if(!lastNumber) lastNumber = 0;
 
         this.displayCalc = lastNumber;
 
@@ -198,9 +224,9 @@ class CalcController { //cria a classe
                 break;
 
             case 'igual':
-               // this.addOperator('=');
-              // this.displayCalc = this.operation[1];
-                console.log(this.operation.length);
+              
+            this.calc();
+
               break;
 
 
